@@ -1,20 +1,27 @@
 const loginForm = document.querySelector("#login-form");
 const loginInput = document.querySelector("#login-form input");  
+const greeting = document.querySelector("#greeting");
 
-const link = document.querySelector("a")
+const HIDDEN_CLASSNAME = "hidden"
 
 function onLoginSumit(event) {
     event.preventDefault();
-    console.log(event);
+    loginForm.classList.add(HIDDEN_CLASSNAME);
+
     const username = loginInput.value;
-    console.log(username);
+    localStorage.setItem("username", username)
+    greeting.innerText = `Hello ${username}`;
+    greeting.classList.remove(HIDDEN_CLASSNAME);
 }
 
-function onClickLink(event) {
-    event.preventDefault();
-    console.dir(event)
-    console.log("링크 클릭")
+function onLoad() {
+    const username = localStorage.getItem('username')
+    if ( username != null) {
+        loginForm.classList.add(HIDDEN_CLASSNAME);
+        greeting.innerText = `Hello ${username}`;
+        greeting.classList.remove(HIDDEN_CLASSNAME);
+    }
 }
 
 loginForm.addEventListener("submit", onLoginSumit);  
-link.addEventListener("click", onClickLink)
+window.addEventListener("load", onLoad)
