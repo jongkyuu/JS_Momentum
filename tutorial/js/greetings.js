@@ -9,6 +9,7 @@ function onLoginSumit(event) {
     event.preventDefault();
     loginForm.classList.add(HIDDEN_CLASSNAME);
     localStorage.setItem(USERNAME_KEY, loginInput.value)
+    var username = loginInput.value;
     paintGreegins(username);
 }
 
