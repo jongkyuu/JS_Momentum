@@ -7,7 +7,6 @@ function todayImage() {
     console.log(image);
 
     const bgImage = document.createElement("img");
-    console.log(bgImage);
     bgImage.src = `image/${image}`;
 
     document.body.appendChild(bgImage);
