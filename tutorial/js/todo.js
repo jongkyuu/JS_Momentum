@@ -14,22 +14,28 @@ function deleteToDo(event) {
     const li = event.target.parentNode;
     li.remove();
 
-    const deletedTodo = event.target.parentNode.firstChild.innerText;
-    const parsedTodo = JSON.parse(localStorage.getItem(TODOS_KEY));
-    var deletedIndex = parsedTodo.indexOf(deletedTodo);
-    console.log(`deletedIndex : ${deletedIndex}`)
-    if (deletedIndex > -1) { 
-        parsedTodo.splice(deletedIndex, 1);
-    }
-    console.log(`parsedTodo : ${parsedTodo}`);
+    console.log(typeof toDos[0].id);
+    console.log(typeof li.id);
+    toDos = toDos.filter(todo => todo.id !== parseInt(li.id));
+    saveToDos();
 
-    localStorage.setItem(TODOS_KEY, JSON.stringify(parsedTodo));
+    // const deletedTodo = event.target.parentNode.firstChild.innerText;
+    // const parsedTodo = JSON.parse(localStorage.getItem(TODOS_KEY));
+    // var deletedIndex = parsedTodo.indexOf(deletedTodo);
+    // console.log(`deletedIndex : ${deletedIndex}`)
+    // if (deletedIndex > -1) { 
+    //     parsedTodo.splice(deletedIndex, 1);
+    // }
+    // console.log(`parsedTodo : ${parsedTodo}`);
+    // localStorage.setItem(TODOS_KEY, JSON.stringify(parsedTodo));
 }
 
-function paintTodo(newTodo) {
+function paintTodo(newTodoObject) {
     const li = document.createElement("li");
+    li.id = newTodoObject.id;
+
     const span = document.createElement("span");
-    span.innerText = newTodo;
+    span.innerText = newTodoObject.text;
 
     const button = document.createElement("button");
     button.innerText = "❌";
@@ -47,8 +53,12 @@ function handleToDoSumit(event) {
     event.preventDefault();
     const newTodo = toDoInput.value;
     clearToDoInput();
-    toDos.push(newTodo);
-    paintTodo(newTodo);
+    const newTodoObject = {
+        id:Date.now(),
+        text:newTodo,
+    }
+    toDos.push(newTodoObject);
+    paintTodo(newTodoObject);
     saveToDos();
 }
 
