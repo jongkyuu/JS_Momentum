@@ -5,8 +5,15 @@ function onGeoOk(position) {
     const lon = position.coords.longitude;
     console.log(`${lat} ${lon}`);
 
-    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`
-    console.log(url);
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+    const data = fetch(url).then(response => response.json()).then(data => {
+        const weatherContainer = document.querySelector("#weather span:first-child");
+        const cityContainer = document.querySelector("#weather span:last-child");
+        const name = data.name;
+        const weather = data.weather[0].main;
+        weatherContainer.innerText = `${data.weather[0].main} / 기온 : ${data.main.temp}도`;
+        cityContainer.innerText = data.name;
+    }); 
 }
     
 
